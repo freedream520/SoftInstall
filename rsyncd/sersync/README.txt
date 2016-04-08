@@ -1,0 +1,1 @@
+在被监控端执行 "sh sersync-install.sh" ,在被同步端执行 "sh server.sh" .

@@ -1,0 +1,108 @@
+#!/bin/bash
+#++++++++++Rsync Server Manegement Script++++++++++
+# Author:	liush								  #
+# Date:		2015-12-22							  #
+# Version:	1.0									  #
+#++++++++++Rsync Server Manegement Script++++++++++
+RETVAL=$?
+PROG=rsync
+CONF_FILE=/usr/local/rsync/rsyncd.conf
+
+#Source Function Library
+#. /etc/init.d/functions
+
+start() {
+	# Check that Rsync is up
+	rsync=`netstat -lntp |grep rsync |wc -l`
+	if [ $rsync -gt 0 ];then
+		echo -e "\033[31mRsync server is running\033[0m" 
+	else
+		/usr/bin/find /var/run/ -name "rsyncd,pid" |xargs rm -f rsyncd.pid
+		echo "Rsync server is starting........"
+		rsync --daemon --config=$CONF_FILE
+		rsync=`netstat -lntp |grep rsync |wc -l`
+		if [ $rsync -gt 0 ];then
+			echo -e "\033[32mStarting Rsync successed.\033[0m"
+		fi
+	fi
+}
+stop() {
+	# Check that Rsync is dtop
+	rsync=`netstat -ntlp |grep rsync |wc -l`
+	if [ $rsync -eq $? ];then
+		/usr/bin/find /var/run/ -name "rsyncd.pid" |xargs rm -f rsyncd.pid
+		sleep 1
+		echo -e "\033[31mRsync server was stoped.\033[0m"
+	else
+		/usr/bin/find /var/run/ -name "rsyncd.pid" |xargs rm -f rsyncd.pid
+		echo "Rsync server is stoping........"
+		while :
+		do
+			killall rsync >/dev/null 2>&1
+			if [ $? -ne 0 ];then
+				break
+			fi
+		done
+		rsync=`netstat -ntlp |grep rsync |wc -l`
+		if [ $rsync -eq 0 ];then
+			echo -e "\033[32mStop rsync successed.\033[0m"
+		fi
+	fi
+}
+status() {
+	rsync=`netstat -ntlp |grep rsync |wc -l`
+	if [ $rsync -ne 0 ];then
+		echo -e "\033[32mRsync is running.033[0m"
+	else
+		echo -e "\033[31mRsync was stoped.\033[0m"
+	fi
+}
+#case The judgement statement began execution
+case $1 in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	status)
+		status
+		;;
+	restart)
+		stop
+		sleep 2
+		start
+		;;
+	*)
+		echo "USage: $rsync {start|stop|status|restart}"
+		REAVAL=3
+		;;
+esac	
+
+exit $RETVAL
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
