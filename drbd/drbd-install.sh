@@ -26,7 +26,7 @@ drbd_install() {
 	mkdir -p /usr/local/drbd/var/run/drbd
 	cp /usr/local/drbd/etc/rc.d/init.d/drbd /etc/rc.d/init.d
 	#Install drbd module
-	cd drbd
+	cd $drbd
 	make clean
 	make KDIR=/usr/src/kernels/2.6.32-431.el6.x86_64/
 	cp drbd.ko /lib/modules/2.6.32-431.el6.x86_64/kernel/lib/
