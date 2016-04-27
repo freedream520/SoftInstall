@@ -4,7 +4,7 @@
 #Date		2015-12-31
 #Func		install fastdfs service
 #Ver		1.0
-#Note 		This script is uitable for CentOS6.5 x64 and only support input one  tracker-ip and storage-ip
+#Note 		This script is suitable for CentOS6.5 x64 and only support input one tracker-ip and storage-ip
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 SOFT_DIR=/usr/local/src/
 NGINX_SDIR=/usr/local/src/lnmp/soft/nginx-1.8.0/
