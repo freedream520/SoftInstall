@@ -106,23 +106,23 @@ tracker_set() {
 	#Modify tracker config file
 	sed -i "s#base_path=/home/yuqing/fastdfs#base_path=$TRACKER_DIR#g" /etc/fdfs/tracker.conf
 	sed -i "s#http.server_port=8080#http.server_port=80#g" /etc/fdfs/tracker.conf
-    sed -i "s/run_by_group=/run_by_group=fdfs/g" /etc/fdfs/tracker.conf
-    sed -i "s/run_by_user=/run_by_user=fdfs/g" /etc/fdfs/tracker.conf
-    #Modify storage_ids config file
-    cp $SOFT_DIR/$fastdfs/conf/storage_ids.conf /etc/fdfs
-    IP_NUM=`echo ${S_IPS} |awk '{print NF}'`
-    echo "100001	group1	$T_IP" >>/etc/fdfs/storage_ids.conf
-    echo "100002	group1	$S_IP" >>/etc/fdfs/storage_ids.conf
-    #echo "100003	group1	$S_IP2" >>/etc/fdfs/storage_ids.conf
-    #Modify client config file
-    sed -i "s#base_path=/home/yuqing/fastdfs#base_path=$CLIENT_DIR#g" /etc/fdfs/client.conf
-    sed -i "s#tracker_server=192.168.0.197:22122#tracker_server=$T_IP:22122#g" /etc/fdfs/client.conf
-    sed -i "s#http.tracker_server_port=8080#http.tracker_server_port=80#g" /etc/fdfs/client.conf
-    sed -i "s/\#\#include http.conf/\#include http.conf/g" /etc/fdfs/client.conf
+    	sed -i "s/run_by_group=/run_by_group=fdfs/g" /etc/fdfs/tracker.conf
+    	sed -i "s/run_by_user=/run_by_user=fdfs/g" /etc/fdfs/tracker.conf
+    	#Modify storage_ids config file
+    	cp $SOFT_DIR/$fastdfs/conf/storage_ids.conf /etc/fdfs
+    	IP_NUM=`echo ${S_IPS} |awk '{print NF}'`
+    	echo "100001	group1	$T_IP" >>/etc/fdfs/storage_ids.conf
+    	echo "100002	group1	$S_IP" >>/etc/fdfs/storage_ids.conf
+    	#echo "100003	group1	$S_IP2" >>/etc/fdfs/storage_ids.conf
+    	#Modify client config file
+    	sed -i "s#base_path=/home/yuqing/fastdfs#base_path=$CLIENT_DIR#g" /etc/fdfs/client.conf
+    	sed -i "s#tracker_server=192.168.0.197:22122#tracker_server=$T_IP:22122#g" /etc/fdfs/client.conf
+    	sed -i "s#http.tracker_server_port=8080#http.tracker_server_port=80#g" /etc/fdfs/client.conf
+    	sed -i "s/\#\#include http.conf/\#include http.conf/g" /etc/fdfs/client.conf
 
-    #Add the services to the startup
-    chkconfig fdfs_trackerd on
-    clear
+    	#Add the services to the startup
+    	chkconfig fdfs_trackerd on
+    	clear
 }
 storage_set() {
 	#Modify service config file
